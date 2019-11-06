@@ -1,43 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product';
+import { ProductService } from './products.service';
 
 @Component({
   selector: 'pm-products',
   templateUrl: './products-list.components.html',
   styleUrls: ['./products-list.component.css'],
+
+  // inject service that is not in root
+  providers: [ProductService],
 })
 export class ProductsListComponent implements OnInit {
   ngOnInit(): void {
-    console.log('OnInit');
-  }
-
-  constructor() {
+    this.products = this.productService.getProducts();
     this.filteredProducts = this.products;
-    this.listFilter = '';
   }
 
-  products: IProduct[] = [
-    {
-      productId: 2,
-      productName: 'Garden Cart',
-      productCode: 'GDN-0023',
-      releaseDate: 'March 18, 2019',
-      description: '15 gallon capacity rolling garden cart',
-      price: 32.99,
-      starRating: 4.2,
-      imageUrl: 'assets/images/garden_cart.png',
-    },
-    {
-      productId: 5,
-      productName: 'Hammer',
-      productCode: 'TBX-0048',
-      releaseDate: 'May 21, 2019',
-      description: 'Curved claw steel hammer',
-      price: 8.9,
-      starRating: 4.8,
-      imageUrl: 'assets/images/hammer.png',
-    },
-  ];
+  constructor(private productService: ProductService) {}
+
+  products: IProduct[] = [];
 
   pageTitle: string = 'Product List';
   imageWidth: number = 50;
