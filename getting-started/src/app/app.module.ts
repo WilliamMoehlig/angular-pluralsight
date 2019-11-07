@@ -11,6 +11,7 @@ import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
 import { StarComponent } from './shared/star.component';
 import { ProductsDetailComponent } from './products/products-detail.component';
 import { WelcomeComponent } from './home/welcome.component';
+import { NotFoundComponent } from './notfound/notfound.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { WelcomeComponent } from './home/welcome.component';
     StarComponent,
     ProductsDetailComponent,
     WelcomeComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,7 @@ import { WelcomeComponent } from './home/welcome.component';
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       // 404 not found
-      { path: '**', redirectTo: 'welcome', pathMatch: 'full' },
+      { path: '**', component: NotFoundComponent, pathMatch: 'full' },
     ]),
   ],
   bootstrap: [AppComponent],
