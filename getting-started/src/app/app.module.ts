@@ -12,6 +12,7 @@ import { StarComponent } from './shared/star.component';
 import { ProductsDetailComponent } from './products/products-detail.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { NotFoundComponent } from './notfound/notfound.component';
+import { ProductsDetailGuard } from './products/products-detail.guard';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { NotFoundComponent } from './notfound/notfound.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'products', component: ProductsListComponent },
-      { path: 'products/:id', component: ProductsDetailComponent },
+      { path: 'products/:id', component: ProductsDetailComponent, canActivate: [ProductsDetailGuard] },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       // 404 not found
