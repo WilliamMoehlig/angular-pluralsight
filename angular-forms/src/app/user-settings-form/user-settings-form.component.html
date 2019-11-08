@@ -1,9 +1,20 @@
 <div class="container">
   <h2>User Settings</h2>
-  <form #form="ngForm" class="form">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" name="name" id="name" class="form-control" [(ngModel)]="userSettings.name" />
+      <input
+        type="text"
+        name="name"
+        id="name"
+        class="form-control"
+        [(ngModel)]="userSettings.name"
+        #nameField="ngModel"
+        (blur)="onBlur(nameField)"
+        [class.field-error]="form.submitted && nameField.invalid"
+        required
+      />
+      <div [hidden]="!form.submitted || nameField.valid" class="alert alert-danger">Enter a name</div>
     </div>
 
     <div class="form-check form-group">
@@ -64,9 +75,7 @@
         name="subscriptionType"
         [(ngModel)]="userSettings.subscriptionType"
       >
-        <option>Monthly</option>
-        <option>Annual</option>
-        <option>Lifetime</option>
+        <option *ngFor="let type of subscriptionTypes | async">{{ type }}</option>
       </select>
     </div>
 
@@ -75,8 +84,10 @@
       <textarea name="notes" id="notes" class="form-control" rows="3" [(ngModel)]="userSettings.notes"></textarea>
     </div>
 
+    <div [hidden]="!postError" class="alert alert-danger">
+      {{ postErrorMessage }}
+    </div>
+
     <button class="btn btn-primary">Send</button>
   </form>
 </div>
-
-{{ originalUserSettings | json }}
