@@ -101,6 +101,7 @@ export class EventsListComponent {
                 city: 'Amsterdam',
                 country: 'Netherlands',
             },
+            onlineUrl: 'https://ng-nl.org/',
             sessions: [
                 {
                     id: 1,

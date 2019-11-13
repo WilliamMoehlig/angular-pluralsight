@@ -19,4 +19,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class EventsThumbnailComponent {
     @Input() event: any;
+
+    getStartTimeStyle(): any {
+        if (this.event && this.event.time === '8:00 am') {
+            return {
+                color: 'green',
+                'font-weight': 'bold',
+            };
+        }
+        return {};
+    }
 }
