@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#">ngEvents</a>
+<nav class="navbar navbar-expand-lg bg-dark">
+    <a class="navbar-brand" [routerLink]="['/']">ngEvents</a>
     <button
         class="navbar-toggler"
         type="button"
@@ -13,10 +13,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link">All Events</a>
+            <li class="nav-item">
+                <a
+                    class="nav-link"
+                    [routerLink]="['/events']"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    >All Events</a
+                >
             </li>
-            <li><a href="" class="nav-link">Create Event</a></li>
+            <li>
+                <a
+                    href=""
+                    class="nav-link"
+                    [routerLink]="['/events/new']"
+                    routerLinkActive="active"
+                    >Create Event</a
+                >
+            </li>
             <li class="nav-item dropdown">
                 <a
                     class="nav-link dropdown-toggle"
@@ -31,11 +45,17 @@
                     <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">
-                        Angular Connect
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div *ngFor="let event of events" routerLinkActive="active">
+                        <a
+                            routerLinkActive="active"
+                            #rla="routerLinkActive"
+                            class="dropdown-item"
+                            [routerLink]="'/events/' + event.id"
+                        >
+                            {{ event.name }}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -54,7 +74,7 @@
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <li>
-                    <a>Welcome John</a>
+                    <a [routerLink]="['user/profile']">Welcome John</a>
                 </li>
             </ul>
         </div>
