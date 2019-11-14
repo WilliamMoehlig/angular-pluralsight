@@ -1,18 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'events-collapsible-well',
     template: `
         <div (click)="toggleContent()" class="card card-body">
-            <h4 class="card-title">{{ title }}</h4>
+            <h4 class="card-title">
+                <ng-content select="[card-title]"></ng-content>
+            </h4>
             <p [hidden]="!visible" class="card-text">
-                <ng-content></ng-content>
+                <ng-content select="[card-body]"></ng-content>
             </p>
         </div>
     `,
 })
 export class CollapsibleWellComponent {
-    @Input() title: string;
     visible = true;
 
     toggleContent() {
