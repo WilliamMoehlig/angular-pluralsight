@@ -27,9 +27,18 @@ export class EventService {
 
     saveEvent(event: IEvent) {
         console.log(EVENTS);
-        event.id = EVENTS.length++;
+        const nextId = Math.max.apply(
+            null,
+            EVENTS.map(s => s.id)
+        );
+        event.id = nextId + 1;
         event.sessions = [];
         EVENTS.push(event);
+    }
+
+    updateEvent(event: IEvent) {
+        const index = EVENTS.findIndex(x => (x.id = event.id));
+        EVENTS[index] = event;
     }
 }
 
