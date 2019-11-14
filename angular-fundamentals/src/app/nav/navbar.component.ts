@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { EventService } from '../events/shared/event.service';
+import { AuthService } from '../user/auth.service';
 
 @Component({
     selector: 'events-navbar',
@@ -26,7 +28,7 @@ import { EventService } from '../events/shared/event.service';
 export class NavbarComponent implements OnInit {
     events: any[];
 
-    constructor(private eventService: EventService) {}
+    constructor(private eventService: EventService, public auth: AuthService) {}
 
     ngOnInit(): void {
         this.events = this.eventService.getEventsNameId();

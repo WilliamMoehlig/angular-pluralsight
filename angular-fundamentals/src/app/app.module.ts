@@ -11,6 +11,7 @@ import {
     EventService,
     EventRouteActivator,
     EventListResolver,
+    CreateSessionComponent,
 } from './events/index';
 
 import { EventsAppComponent } from './events-app.components';
@@ -19,10 +20,19 @@ import { NavbarComponent } from './nav/navbar.component';
 import { Error404Component } from './errors/404.component';
 import { ToastService } from './shared/toast.service';
 
+import { AuthService } from './user/auth.service';
+
 import { appRoutes } from '../routes';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    imports: [BrowserModule, RouterModule.forRoot(appRoutes), UserModule],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(appRoutes),
+        UserModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
     declarations: [
         EventsAppComponent,
         EventsListComponent,
@@ -31,6 +41,7 @@ import { appRoutes } from '../routes';
         EventDetailComponent,
         CreateEventComponent,
         Error404Component,
+        CreateSessionComponent,
     ],
     bootstrap: [EventsAppComponent],
     providers: [
@@ -39,6 +50,7 @@ import { appRoutes } from '../routes';
         EventListResolver,
         EventRouteActivator,
         { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
+        AuthService,
     ],
 })
 export class AppModule {}
@@ -49,4 +61,5 @@ export function checkDirtyState(component: CreateEventComponent) {
             'You have not saved this event, do you really want to cancel?'
         );
     }
+    return true;
 }

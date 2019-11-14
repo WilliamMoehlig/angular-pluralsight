@@ -24,6 +24,13 @@ export class EventService {
             return { id: event.id, name: event.name };
         });
     }
+
+    saveEvent(event: IEvent) {
+        console.log(EVENTS);
+        event.id = EVENTS.length++;
+        event.sessions = [];
+        EVENTS.push(event);
+    }
 }
 
 const EVENTS: IEvent[] = [
