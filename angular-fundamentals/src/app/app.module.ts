@@ -19,8 +19,9 @@ import { EventsAppComponent } from './events-app.components';
 
 import { NavbarComponent } from './nav/navbar.component';
 import { Error404Component } from './errors/404.component';
-import { ToastService } from './shared/toast.service';
+import { CollapsibleWellComponent } from './shared/collapsible-well.component';
 
+import { ToastService } from './shared/toast.service';
 import { AuthService } from './user/auth.service';
 
 import { appRoutes } from '../routes';
@@ -44,6 +45,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         Error404Component,
         CreateSessionComponent,
         SessionListComponent,
+        CollapsibleWellComponent,
     ],
     bootstrap: [EventsAppComponent],
     providers: [
