@@ -60,14 +60,23 @@
             </li>
         </ul>
 
-        <form class="form-inline my-2 my-lg-0" id="searchForm">
+        <form
+            class="form-inline my-2 my-lg-0"
+            id="searchForm"
+            (ngSubmit)="searchSession(searchTerm)"
+        >
             <input
                 type="search"
                 class="form-control mr-sm-2"
                 placeholder="Search sessions"
                 aria-label="Search"
+                name="searchTerm"
+                [(ngModel)]="searchTerm"
             />
-            <button class="btn btn-outline-success my-2 my-sm-0">
+            <button
+                class="btn btn-outline-success my-2 my-sm-0"
+                events-modal-trigger="searchResults"
+            >
                 Search
             </button>
         </form>
@@ -89,3 +98,21 @@
         </div>
     </div>
 </nav>
+
+<events-simple-modal
+    closeOnBodyClick="true"
+    title="Matching Sessions"
+    elementId="searchResults"
+>
+    <div class="list-group">
+        <a
+            class="list-group-item"
+            *ngFor="let session of foundSessions"
+            [routerLink]="['/events', session.id]"
+            >{{ session.name }}</a
+        >
+    </div>
+    <p *ngIf="foundSessions && foundSessions.length < 1">
+        No matching sessions found!
+    </p>
+</events-simple-modal>
