@@ -23,10 +23,12 @@ import { Error404Component } from './errors/404.component';
 
 import { CollapsibleWellComponent } from './shared/collapsible-well.component';
 
-import { ToastService } from './shared/toast.service';
+import { TOASTR_TOKEN, Toastr } from './shared/toast.service';
 import { AuthService } from './user/auth.service';
 
 import { appRoutes } from '../routes';
+
+declare const toastr: Toastr;
 
 @NgModule({
     imports: [
@@ -52,7 +54,7 @@ import { appRoutes } from '../routes';
     bootstrap: [EventsAppComponent],
     providers: [
         EventService,
-        ToastService,
+        { provide: TOASTR_TOKEN, useValue: toastr },
         EventListResolver,
         EventRouteActivator,
         { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
