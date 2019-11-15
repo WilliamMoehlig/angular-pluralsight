@@ -1,4 +1,12 @@
 <div class="row" *ngFor="let session of visibleSessions">
+    <div class="col-md-1">
+        <events-upvote
+            *ngIf="auth.isAuthenticated()"
+            (vote)="toggleVote(session)"
+            [count]="session.voters.length"
+            [voted]="userHasVoted(session)"
+        ></events-upvote>
+    </div>
     <div class="col-md-9 ">
         <events-collapsible-well>
             <div card-title>

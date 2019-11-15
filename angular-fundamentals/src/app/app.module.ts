@@ -15,6 +15,8 @@ import {
     CreateSessionComponent,
     SessionListComponent,
     DurationPipe,
+    VoterService,
+    UpvoteComponent,
 } from './events/index';
 
 import { EventsAppComponent } from './events-app.components';
@@ -59,6 +61,7 @@ const jQuery = window['$'];
         DurationPipe,
         SimpleModalComponent,
         ModalTriggerDirective,
+        UpvoteComponent,
     ],
     bootstrap: [EventsAppComponent],
     providers: [
@@ -69,6 +72,7 @@ const jQuery = window['$'];
         EventRouteActivator,
         { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
         AuthService,
+        VoterService,
     ],
 })
 export class AppModule {}
