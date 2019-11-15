@@ -1,24 +1,21 @@
-<div class="container-fluid">
-    <div class="row" *ngFor="let session of sessions">
-        <div class="col-md-9 ">
-            <events-collapsible-well>
-                <div card-title>
-                    {{ session.name }}
-                    <i
-                        *ngIf="session.voters.length > 3"
-                        class="fas fa-fire"
-                        style="color:orangered;"
-                    ></i>
-                </div>
-                <div card-body>
-                    <h6>{{ session.presenter }}</h6>
-                    <span>Duration: {{ session.duration }}</span
-                    ><br />
-                    <span>Level: {{ session.level }}</span>
-                    <p>{{ session.abstract }}</p>
-                    {{ session.voters }}
-                </div>
-            </events-collapsible-well>
-        </div>
+<div class="row" *ngFor="let session of visibleSessions">
+    <div class="col-md-9 ">
+        <events-collapsible-well>
+            <div card-title>
+                {{ session.name }}
+                <i
+                    *ngIf="session.voters.length > 3"
+                    class="fas fa-fire"
+                    style="color:orangered;"
+                ></i>
+            </div>
+            <div card-body>
+                <h6>{{ session.presenter }}</h6>
+                <span>Duration: {{ session.duration | duration }}</span
+                ><br />
+                <span>Level: {{ session.level }}</span>
+                <p>{{ session.abstract }}</p>
+            </div>
+        </events-collapsible-well>
     </div>
 </div>

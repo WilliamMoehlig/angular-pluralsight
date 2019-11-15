@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { UserModule } from './user/user.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
     EventsListComponent,
@@ -13,19 +14,19 @@ import {
     EventListResolver,
     CreateSessionComponent,
     SessionListComponent,
+    DurationPipe,
 } from './events/index';
 
 import { EventsAppComponent } from './events-app.components';
-
 import { NavbarComponent } from './nav/navbar.component';
 import { Error404Component } from './errors/404.component';
+
 import { CollapsibleWellComponent } from './shared/collapsible-well.component';
 
 import { ToastService } from './shared/toast.service';
 import { AuthService } from './user/auth.service';
 
 import { appRoutes } from '../routes';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -46,6 +47,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CreateSessionComponent,
         SessionListComponent,
         CollapsibleWellComponent,
+        DurationPipe,
     ],
     bootstrap: [EventsAppComponent],
     providers: [

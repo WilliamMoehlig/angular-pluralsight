@@ -28,6 +28,8 @@ export class EventDetailComponent implements OnInit {
 
     event: IEvent;
     addMode: boolean;
+    filterBy = 'all';
+    sortBy = 'votes';
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
