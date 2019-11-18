@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { EventService } from '../events/shared/event.service';
 import { AuthService } from '../user/auth.service';
-import { ISession, IEvent } from '../events';
-import { $ } from 'protractor';
+import { ISession } from '../events';
 
 @Component({
     selector: 'events-navbar',

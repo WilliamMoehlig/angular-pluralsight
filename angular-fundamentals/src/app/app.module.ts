@@ -19,6 +19,7 @@ import {
     UpvoteComponent,
     LocationValidator,
     EventResolver,
+    EventRouteActivator,
 } from './events/index';
 
 import { EventsAppComponent } from './events-app.components';
@@ -76,6 +77,7 @@ const jQuery = window['$'];
         { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
         AuthService,
         VoterService,
+        EventRouteActivator,
         EventResolver,
     ],
 })

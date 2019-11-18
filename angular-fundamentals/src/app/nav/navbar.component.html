@@ -109,7 +109,8 @@
             class="list-group-item"
             *ngFor="let session of foundSessions"
             [routerLink]="['/events', session.id]"
-            >{{ session.name }}</a
+        >
+            {{ session.name }}</a
         >
     </div>
     <p *ngIf="foundSessions && foundSessions.length < 1">
