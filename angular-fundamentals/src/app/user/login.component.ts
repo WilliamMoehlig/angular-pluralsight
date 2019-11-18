@@ -18,12 +18,20 @@ import { AuthService } from './auth.service';
 export class LoginComponent {
     userName: string;
     password: string;
+    loginInvalid = false;
 
     constructor(private router: Router, private authService: AuthService) {}
 
     login(formValues) {
-        this.authService.loginUser(formValues.userName, formValues.password);
-        this.router.navigateByUrl('/events');
+        this.authService
+            .loginUser(formValues.userName, formValues.password)
+            .subscribe(resp => {
+                if (!resp) {
+                    this.loginInvalid = true;
+                } else {
+                    this.router.navigateByUrl('/events');
+                }
+            });
     }
 
     cancel() {
