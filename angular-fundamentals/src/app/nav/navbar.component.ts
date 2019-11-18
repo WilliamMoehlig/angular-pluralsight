@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { EventService } from '../events/shared/event.service';
 import { AuthService } from '../user/auth.service';
-import { ISession } from '../events';
+import { ISession, IEvent } from '../events';
 import { $ } from 'protractor';
 
 @Component({
@@ -33,14 +33,16 @@ import { $ } from 'protractor';
     ],
 })
 export class NavbarComponent implements OnInit {
-    events: any[];
+    events: any;
     searchTerm = '';
     foundSessions: ISession[];
 
     constructor(private eventService: EventService, public auth: AuthService) {}
 
     ngOnInit(): void {
-        this.events = this.eventService.getEventsNameId();
+        this.eventService
+            .getEventsNameId()
+            .subscribe(events => (this.events = events));
     }
 
     searchSession(searchTerm) {

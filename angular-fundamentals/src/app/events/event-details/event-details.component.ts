@@ -32,9 +32,9 @@ export class EventDetailComponent implements OnInit {
     sortBy = 'votes';
 
     ngOnInit(): void {
-        this.route.params.subscribe(params => {
-            const id: number = Number(params.id);
-            this.event = this.eventService.getEvent(id);
+        this.route.data.subscribe(data => {
+            this.event = data.event;
+            this.addMode = false;
         });
     }
 
