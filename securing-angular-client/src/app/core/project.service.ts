@@ -1,68 +1,94 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Constants } from '../constants';
-import { Milestone } from '../model/milestone';
-import { MilestoneStatus } from '../model/milestone-status';
-import { Project } from '../model/project';
-import { UserPermission } from '../model/user-permission';
-import { UserProfile } from '../model/user-profile';
-import { CoreModule } from './core.module';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { Constants } from "../constants";
+import { Milestone } from "../model/milestone";
+import { MilestoneStatus } from "../model/milestone-status";
+import { Project } from "../model/project";
+import { UserPermission } from "../model/user-permission";
+import { UserProfile } from "../model/user-profile";
+import { CoreModule } from "./core.module";
 
-
-@Injectable({ providedIn: CoreModule})
+@Injectable()
 export class ProjectService {
-    constructor(private _httpClient: HttpClient) { }
-    
-    getProjects(): Observable<Project[]> {
-        return this._httpClient.get<Project[]>(Constants.apiRoot + 'Projects');
-    }
+  constructor(private _httpClient: HttpClient) {}
 
-    getProject(projectId: number): Observable<Project> {
-        return this._httpClient.get<Project>(Constants.apiRoot + 'Projects/' + projectId);
-    }
+  getProjects(): Observable<Project[]> {
+    return this._httpClient.get<Project[]>(Constants.apiRoot + "Projects");
+  }
 
-    getProjectUsers(projectId: number): Observable<UserProfile[]> {
-        return this._httpClient.get<UserProfile[]>(Constants.apiRoot + 'Projects/' + projectId + '/Users');
-    }
+  getProject(projectId: number): Observable<Project> {
+    return this._httpClient.get<Project>(
+      Constants.apiRoot + "Projects/" + projectId
+    );
+  }
 
-    addProject(project: Project): Observable<Project> {
-        return this._httpClient.post<Project>(Constants.apiRoot + 'Projects', project);
-    }
+  getProjectUsers(projectId: number): Observable<UserProfile[]> {
+    return this._httpClient.get<UserProfile[]>(
+      Constants.apiRoot + "Projects/" + projectId + "/Users"
+    );
+  }
 
-    deleteProject(project: Project): Observable<object> {
-        return this._httpClient.delete(Constants.apiRoot + 'Projects/' + project.id);
-    }
+  addProject(project: Project): Observable<Project> {
+    return this._httpClient.post<Project>(
+      Constants.apiRoot + "Projects",
+      project
+    );
+  }
 
-    addUserPermission(userPermission: UserPermission) {
-        return this._httpClient.post(Constants.apiRoot + 'UserPermissions', userPermission);
-    }
+  deleteProject(project: Project): Observable<object> {
+    return this._httpClient.delete(
+      Constants.apiRoot + "Projects/" + project.id
+    );
+  }
 
-    removeUserPermission(userId: string, projectId: number) {
-        return this._httpClient.delete(`${Constants.apiRoot}UserPermissions/?userId=${userId}&projectId=${projectId}`);
-    }
+  addUserPermission(userPermission: UserPermission) {
+    return this._httpClient.post(
+      Constants.apiRoot + "UserPermissions",
+      userPermission
+    );
+  }
 
-    updateUserPermission(userPermission) {
-        return this._httpClient.put(`${Constants.apiRoot}UserPermissions`, userPermission);
-    }
+  removeUserPermission(userId: string, projectId: number) {
+    return this._httpClient.delete(
+      `${Constants.apiRoot}UserPermissions/?userId=${userId}&projectId=${projectId}`
+    );
+  }
 
-    getMilestones(projectId: number): Observable<Milestone[]> {
-        return this._httpClient.get<Milestone[]>(Constants.apiRoot + 'Milestone');
-    }
+  updateUserPermission(userPermission) {
+    return this._httpClient.put(
+      `${Constants.apiRoot}UserPermissions`,
+      userPermission
+    );
+  }
 
-    getMilestoneStatuses() {
-        return this._httpClient.get<MilestoneStatus[]>(`${Constants.apiRoot}Projects/MilestoneStatuses`);
-    }
+  getMilestones(projectId: number): Observable<Milestone[]> {
+    return this._httpClient.get<Milestone[]>(Constants.apiRoot + "Milestone");
+  }
 
-    addMilestone(milestone: Milestone) {
-        return this._httpClient.post(`${Constants.apiRoot}Projects/Milestones`, milestone);
-    }
+  getMilestoneStatuses() {
+    return this._httpClient.get<MilestoneStatus[]>(
+      `${Constants.apiRoot}Projects/MilestoneStatuses`
+    );
+  }
 
-    deleteMilestone(id: number) {
-        return this._httpClient.delete(`${Constants.apiRoot}Projects/Milestones/${id}`);
-    }
+  addMilestone(milestone: Milestone) {
+    return this._httpClient.post(
+      `${Constants.apiRoot}Projects/Milestones`,
+      milestone
+    );
+  }
 
-    updateMilestone(milestone: Milestone) {
-        return this._httpClient.put(`${Constants.apiRoot}Projects/Milestones/${milestone.id}`, milestone);
-    }
+  deleteMilestone(id: number) {
+    return this._httpClient.delete(
+      `${Constants.apiRoot}Projects/Milestones/${id}`
+    );
+  }
+
+  updateMilestone(milestone: Milestone) {
+    return this._httpClient.put(
+      `${Constants.apiRoot}Projects/Milestones/${milestone.id}`,
+      milestone
+    );
+  }
 }

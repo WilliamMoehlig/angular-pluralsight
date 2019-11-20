@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { MatDialog, MatTableDataSource } from "@angular/material";
+import { ActivatedRoute } from "@angular/router";
 
-import { DeleteDialogComponent } from '../admin/delete-dialog.component';
-import { AccountService } from '../core/account.service';
-import { ProjectService } from '../core/project.service';
-import { Utils } from '../core/utils';
-import { Milestone } from '../model/milestone';
-import { MilestoneStatus } from '../model/milestone-status';
-import { Project } from '../model/project';
-import { AddEditMilestoneDialogComponent } from './add-edit-milestone-dialog.component';
+import { DeleteDialogComponent } from "../admin/delete-dialog.component";
+import { AccountService } from "../core/account.service";
+import { ProjectService } from "../core/project.service";
+import { Utils } from "../core/utils";
+import { Milestone } from "../model/milestone";
+import { MilestoneStatus } from "../model/milestone-status";
+import { Project } from "../model/project";
+import { AddEditMilestoneDialogComponent } from "./add-edit-milestone-dialog.component";
+import { AuthService } from "../core/auth-service.component";
 
 @Component({
-  selector: 'app-project',
-  templateUrl: 'project.component.html',
-  styleUrls: ['project.component.scss']
+  selector: "app-project",
+  templateUrl: "project.component.html",
+  styleUrls: ["project.component.scss"]
 })
 export class ProjectComponent implements OnInit {
-  displayedColumns = ['name', 'status', 'actions'];
+  displayedColumns = ["name", "status", "actions"];
   dataSource = new MatTableDataSource();
   milestones: Milestone[];
   milestoneStatuses: MilestoneStatus[];
@@ -28,7 +29,8 @@ export class ProjectComponent implements OnInit {
     private _route: ActivatedRoute,
     private _projectService: ProjectService,
     private _acctService: AccountService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _auth: AuthService
   ) {}
 
   ngOnInit() {
@@ -47,12 +49,12 @@ export class ProjectComponent implements OnInit {
     var newMs = new Milestone();
     newMs.projectId = this.project.id;
     const dialogRef = this.dialog.open(AddEditMilestoneDialogComponent, {
-      width: '348px',
+      width: "348px",
       data: {
         milestone: newMs,
         milestoneStatuses: this.milestoneStatuses,
         defaultStatus: this.milestoneStatuses[0],
-        mode: 'Add'
+        mode: "Add"
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -67,40 +69,62 @@ export class ProjectComponent implements OnInit {
   editMilestone(milestone: Milestone) {
     var clonedMilestone = JSON.parse(JSON.stringify(milestone));
     const dialogRef = this.dialog.open(AddEditMilestoneDialogComponent, {
-        width: '348px',
-        data: {
-          milestone: clonedMilestone,
-          milestoneStatuses: this.milestoneStatuses,
-          defaultStatus: this.milestoneStatuses.find(ms => ms.id == milestone.milestoneStatusId)
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result !== undefined) {
-          this._projectService.updateMilestone(result).subscribe(() => {
-            this.ngOnInit();
-          });
-        }
-      });
-    }
+      width: "348px",
+      data: {
+        milestone: clonedMilestone,
+        milestoneStatuses: this.milestoneStatuses,
+        defaultStatus: this.milestoneStatuses.find(
+          ms => ms.id == milestone.milestoneStatusId
+        )
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this._projectService.updateMilestone(result).subscribe(() => {
+          this.ngOnInit();
+        });
+      }
+    });
+  }
 
   deleteMilestone(milestone: Milestone) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-        width: '348px',
-        data: { entityName: 'Milestone', message: `Are you sure you want to delete milestone ${milestone.name}?` }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result !== undefined) {
-            this._projectService.deleteMilestone(milestone.id).subscribe(() => {
-                this.ngOnInit();
-            }, error => this.error = Utils.formatError(error));
-              }
-      });
-  
-    }
+      width: "348px",
+      data: {
+        entityName: "Milestone",
+        message: `Are you sure you want to delete milestone ${milestone.name}?`
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this._projectService.deleteMilestone(milestone.id).subscribe(
+          () => {
+            this.ngOnInit();
+          },
+          error => (this.error = Utils.formatError(error))
+        );
+      }
+    });
+  }
 
   getStatusName(id: number) {
-      if (!this.milestoneStatuses) return '';
-      var status = this.milestoneStatuses.find(ms => ms.id == id);
-      return status ? status.name : 'unknown';
+    if (!this.milestoneStatuses) return "";
+    var status = this.milestoneStatuses.find(ms => ms.id == id);
+    return status ? status.name : "unknown";
+  }
+
+  canEditProject(): boolean {
+    if (
+      !this.project ||
+      !this._auth.authContext ||
+      !this._auth.authContext.userProfile ||
+      !this._auth.authContext.userProfile.userPermissions
+    ) {
+      return false;
+    }
+    const editPerm = this._auth.authContext.userProfile.userPermissions.find(
+      up => up.projectId === this.project.id && up.value === "Edit"
+    );
+    return !!editPerm || this._auth.authContext.isAdmin;
   }
 }

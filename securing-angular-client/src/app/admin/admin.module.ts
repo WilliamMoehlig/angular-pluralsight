@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import {
   MatButtonModule,
   MatDialogModule,
@@ -7,16 +7,17 @@ import {
   MatInputModule,
   MatSelectModule,
   MatTableModule,
-  MatToolbarModule,
-} from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser';
+  MatToolbarModule
+} from "@angular/material";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { AddProjectDialogComponent } from './add-project-dialog.component';
-import { AddProjectUserDialogComponent } from './add-project-user-dialog.component';
-import { AdminRoutingModule } from './admin-routing.module';
-import { DeleteDialogComponent } from './delete-dialog.component';
-import { ManagePermissionsComponent } from './manage-permissions.component';
-import { ManageProjectsComponent } from './manage-projects.component';
+import { AddProjectDialogComponent } from "./add-project-dialog.component";
+import { AddProjectUserDialogComponent } from "./add-project-user-dialog.component";
+import { AdminRoutingModule } from "./admin-routing.module";
+import { DeleteDialogComponent } from "./delete-dialog.component";
+import { ManagePermissionsComponent } from "./manage-permissions.component";
+import { ManageProjectsComponent } from "./manage-projects.component";
+import { CoreModule } from "../core/core.module";
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { ManageProjectsComponent } from './manage-projects.component';
     MatTableModule,
     MatInputModule,
     MatSelectModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    CoreModule
   ],
   exports: [],
   declarations: [

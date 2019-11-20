@@ -14,7 +14,7 @@
       <button *ngIf="isLoggedIn" mat-button routerLink="/projects">
         My Projects
       </button>
-      <button *ngIf="isLoggedIn" mat-button routerLink="/admin">
+      <button *ngIf="isAdmin()" mat-button routerLink="/admin">
         Manage Projects
       </button>
     </span>

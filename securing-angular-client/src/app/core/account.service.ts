@@ -1,30 +1,40 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
-import { Constants } from '../constants';
-import { UserProfile } from '../model/user-profile';
-import { CoreModule } from './core.module';
+import { Constants } from "../constants";
+import { UserProfile } from "../model/user-profile";
+import { CoreModule } from "./core.module";
 
-@Injectable({ providedIn: CoreModule})
+@Injectable()
 export class AccountService {
-    userProfile: UserProfile;
-    constructor(private _httpClient: HttpClient) { }
-      
-    getAllUsers(): Observable<UserProfile[]> {
-        return this._httpClient.get<UserProfile[]>(Constants.apiRoot + 'Account/Users');
-    }
+  userProfile: UserProfile;
+  constructor(private _httpClient: HttpClient) {}
 
-    createUserProfile(userProfile: UserProfile) {
-        return this._httpClient.post(`${Constants.apiRoot}Account/Profile`, userProfile);
-    }
+  getAllUsers(): Observable<UserProfile[]> {
+    return this._httpClient.get<UserProfile[]>(
+      Constants.apiRoot + "Account/Users"
+    );
+  }
 
-    updateUserProfile(userProfile: UserProfile) {
-        return this._httpClient.put(`${Constants.apiRoot}Account/Profile/${userProfile.id}`, userProfile);
-    }
+  createUserProfile(userProfile: UserProfile) {
+    return this._httpClient.post(
+      `${Constants.apiRoot}Account/Profile`,
+      userProfile
+    );
+  }
 
-    register(userInfo: any) {
-        return this._httpClient.post(`${Constants.apiRoot}Account/Register`, userInfo);
+  updateUserProfile(userProfile: UserProfile) {
+    return this._httpClient.put(
+      `${Constants.apiRoot}Account/Profile/${userProfile.id}`,
+      userProfile
+    );
+  }
 
-    }
+  register(userInfo: any) {
+    return this._httpClient.post(
+      `${Constants.apiRoot}Account/Register`,
+      userInfo
+    );
+  }
 }
